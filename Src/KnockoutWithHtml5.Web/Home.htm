@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="Scripts/knockout-2.2.1.debug.js" type="text/javascript"></script>
+    <script src="Scripts/jquery-1.9.0.min.js" type="text/javascript"></script>
+    <script src="Customer Scripts/Home.js" type="text/javascript"></script>
+</head>
+<body>
+    <div>
+        <h2>Without Knockout</h2>
+        <span>Item Number :</span>
+        <span id="itemnumber"></span> <br/>
+        <span>Model</span>
+        <input id="model"/>
+        <span>Sale Price</span>
+        <input id="saleprice"/>
+    </div>
+    <div>
+        <h2>Display the values modified above in the textbox</h2>
+        <span>Model</span>
+        <span id="modifiedmodel"></span><br/>
+        <span>Sale Price</span>
+        <span id="modifiedsaleprice"></span><br/>
+    </div>
+    <hr/>
+    <div>
+        <h2>With Knockout</h2>
+        <span>Item Number :</span>
+        <span data-bind="text:id" ></span> <br/>
+        <span>Model</span>
+        <input data-bind="value:model"/>
+        <span>Sale Price</span>
+        <input data-bind="value:salePrice"/>
+    </div>
+    <div>
+        <h2>Display the values modified above in the textbox USING Knockout</h2>
+        <span>Model</span>
+        <span data-bind="text:model"></span><br/>
+        <span>Sale Price</span>
+        <span data-bind="text:salePrice"></span><br/>
+    </div>
+</body>
+</html>
