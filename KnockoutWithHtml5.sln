@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnockoutWithHtml5.Web", "Src\KnockoutWithHtml5.Web\KnockoutWithHtml5.Web.csproj", "{6D752D9A-2DF3-4E51-81C6-5FDEE5A23F7E}"
 EndProject
 Global

@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Knockout: Observable</title>
+    <link href="css/fonts.css" rel="stylesheet" type="text/css" />
+	<link href="css/styles.css" rel="stylesheet" type="text/css" />
+    <script src="Scripts/knockout-2.2.1.debug.js" type="text/javascript"></script>
+    <script src="Scripts/jquery-1.9.0.min.js" type="text/javascript"></script>
+    <script src="Customer Scripts/data.js" type="text/javascript"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        $(function () {
+            my.data = {
+                metadata: {
+                    pageTitle: "Observables",
+                    personal: {
+                        link: "http://in.linkedin.com/in/muruganamirthavel",
+                        text: "@muggy"
+                    }
+                },
+                product1: {
+                    id: 1002,
+                    itemNumber: "T110",
+                    model: "Taylor 110",
+                    salePrice: 699.75
+                },
+                product2: {
+                    id: ko.observable(1002),
+                    itemNumber: ko.observable("T314CE"),
+                    model: ko.observable("Taylor 314"),
+                    salePrice: ko.observable(1199.95)
+                }
+            };
+            
+            ko.applyBindings(my.data);
+        });
+    </script>
+    <div class="page">
+        <div class="header" data-bind="with: metadata">
+            <h1 data-bind="text: pageTitle"></h1>
+            <div data-bind="with:personal">
+                <a href="Home.htm">Home</a>
+                <a data-bind="attr:{href:link,title:text},text:text" class="personalCss"></a>
+            </div>
+        </div>
+    </div>
+    <div>
+			<h2>Object Literal</h2>
+			<span>Item number</span><span data-bind="text: product1.itemNumber"></span>
+			<br />
+			<span>Guitar model:</span><input data-bind="value: product1.model" />
+			<span>Sales price:</span><input data-bind="value: product1.salePrice" />
+		</div>
+		<div>
+			<h2>Underlying Source Object for Object Literal</h2>
+			<span>Item number</span><span data-bind="text: product1.itemNumber"></span>
+			<br />
+            <span>Guitar model:</span><span data-bind="text: product1.model"></span> <span>Sales
+                price:</span><span data-bind="text: product1.salePrice"></span>
+        </div>
+		<div>
+			<h2>Observables</h2>
+			<span>Item number</span><span data-bind="text: product2.itemNumber" ></span>
+			<br />
+			<span>Guitar model:</span><input data-bind="value: product2.model" />
+			<span>Sales price:</span><input data-bind="value: product2.salePrice" />
+		</div>
+		<div>
+			<h2>Underlying Source Object for Observable Object</h2>
+			<span>Item number</span><span data-bind="text: product2.itemNumber"></span>
+			<br />
+			<span>Guitar model:</span><span data-bind="text: product2.model"></span> <span>Sales price:</span><span data-bind="text: product2.salePrice"></span>
+		</div>
+        <div class="topics">
+            <span>Explores:</span>
+            <ul>
+                <li>binding without observables</li>
+                <li>binding with observables</li>
+            </ul>
+        </div>
+
+</body>
+</html>
