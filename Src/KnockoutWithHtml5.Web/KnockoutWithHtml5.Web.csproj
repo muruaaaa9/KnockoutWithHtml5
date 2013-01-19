@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Computed.htm" />
+    <Content Include="ComputedWithGrandTotal.htm" />
     <Content Include="css\fonts.css" />
     <Content Include="css\styles.css" />
     <Content Include="Customer Scripts\data.js" />
