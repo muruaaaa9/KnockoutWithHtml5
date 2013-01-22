@@ -57,6 +57,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Computed Converter Read Write.htm" />
     <Content Include="Computed.htm" />
     <Content Include="ComputedWithGrandTotal.htm" />
     <Content Include="css\fonts.css" />

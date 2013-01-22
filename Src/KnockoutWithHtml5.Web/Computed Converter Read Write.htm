@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Knockout: Computed converter</title>
+    <link href="css/fonts.css" rel="stylesheet" type="text/css" />
+    <link href="css/styles.css" rel="stylesheet" type="text/css" />
+    <script src="Scripts/knockout-2.2.1.debug.js" type="text/javascript"></script>
+    <script src="Scripts/jquery-1.9.0.min.js" type="text/javascript"></script>
+    <script src="Customer Scripts/data.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            var photopath = "images/";
+            //function helper
+            my.formatCurrency = function (value) {
+                return "$" + value.toFixed(2);
+            };
+            //for creating product models
+            my.Product = function () {
+                this.id = ko.observable();
+                this.salePrice = ko.observable();
+                this.photo = ko.observable();
+                this.shortDescription = ko.observable();
+                this.photoUrl = ko.computed(function () {
+                    return photopath + this.photo();
+                }, this);
+            };
+
+            my.vm = {
+                metadata: {
+                    pageTitle: "Knockout: Computed - converter",
+                    personal: {
+                        link: "http://in.linkedin.com/in/muruganamirthavel",
+                        text: "@muggy"
+                    }
+                },
+                product: ko.observable(
+                    new my.Product()
+                          .shortDescription("Taylor koa series k66ce")
+                          .salePrice(4199)
+                          .photo("Taylor Koa Series K66ce Grand Symphony 12-String Cutaway Acoustic Electric Guitar.png")
+                ),
+                quantity: ko.observable(2)
+            };
+            ///////////////////////////////////////
+            /////// read / write
+            ////////////////////////////////////
+            my.vm.extendedPrice = ko.computed({
+                read: function () {
+                    var extPrice = this.product() ?
+                        this.product().salePrice() * parseInt("0" + this.quantity(), 10) : 0;
+                    return "$" + extPrice.toFixed(2);
+                },
+                write: function (value) {
+                    value = parseFloat(value.replace(/[^\.anchor\d]/g, ""));
+                    value = isNaN(value) ? 0 : value;
+                    var unitPrice = value / this.quantity();
+                    this.product().salePrice(unitPrice);
+                },
+                owner: my.vm
+            });
+
+
+            /////////////////////////////////////
+            ko.applyBindings(my.vm);
+        });
+    </script>
+</head>
+<body>
+    <div class="page">
+        <div class="header" data-bind="with: metadata">
+            <h1 data-bind="text: pageTitle"></h1>
+            <div data-bind="with:personal">
+                <a href="Home.htm">Indiex</a>
+                <a data-bind="attr:{href: link, title:text}, text: text" class="personalCss"></a>
+            </div>
+        </div>
+        <div id="main">
+            <div class="showroom">
+                <div>
+                    <div>
+                        <img data-bind="attr:{src:product().photoUrl, title:product().shortDescription}" class="photoThumbnail"/>
+                    </div>
+                </div>
+                <div>
+                    <span class="caption">Product:</span>
+                    <span data-bind="text:product().shortDescription"></span>
+                </div>
+                <div>
+                    <span class="caption">Unit Price:</span>
+                    <input data-bind="value:product().salePrice, valueUpdate:'afterkeydown'" class="currencyInput"/>
+                </div>
+                 <div>
+                        <span class="caption">Quantity:</span>
+                        <input data-bind="value: quantity, valueUpdate: 'afterkeydown'" class="integerInput"/>
+                    </div>
+                <div>
+                    <span class="caption">Ext.Price</span>
+                    <input data-bind="value:extendedPrice, valueUpdate: 'afterkeydown'"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
