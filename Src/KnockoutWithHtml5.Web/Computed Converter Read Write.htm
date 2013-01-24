@@ -8,6 +8,7 @@
     <script src="Scripts/jquery-1.9.0.min.js" type="text/javascript"></script>
     <script src="Customer Scripts/data.js" type="text/javascript"></script>
     <script type="text/javascript">
+       
         $(function () {
             var photopath = "images/";
             //function helper
@@ -35,9 +36,9 @@
                 },
                 product: ko.observable(
                     new my.Product()
-                          .shortDescription("Taylor koa series k66ce")
-                          .salePrice(4199)
-                          .photo("Taylor Koa Series K66ce Grand Symphony 12-String Cutaway Acoustic Electric Guitar.png")
+                        .shortDescription("Taylor koa series k66ce")
+                        .salePrice(4199)
+                        .photo("Taylor Koa Series K66ce Grand Symphony 12-String Cutaway Acoustic Electric Guitar.png")
                 ),
                 quantity: ko.observable(2)
             };
@@ -58,8 +59,6 @@
                 },
                 owner: my.vm
             });
-
-
             /////////////////////////////////////
             ko.applyBindings(my.vm);
         });

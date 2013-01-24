@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title></title>
+        <link href="css/fonts.css" rel="stylesheet" type="text/css" />
+        <link href="css/styles.css" rel="stylesheet" type="text/css" />
+        <script src="Scripts/knockout-2.2.1.debug.js" type="text/javascript"></script>
+        <script src="Scripts/jquery-1.9.0.min.js" type="text/javascript"></script>
+  
+    </head>
+    <body>
+            <div id="simple-observable-header">
+                <a href="Home.htm">Index</a>
+                <a data-bind="attr:{href: link, title:text}, text: text" class="personalCss"></a>
+            </div>
+        <div id="simple-observable">
+            Unit Price:
+
+            <input data-bind="value:salePrice, valueUpdate:'afterkeydown'"
+                   class="currencyInput" />
+
+            Quantity:
+
+            <input data-bind="value: quantity, valueUpdate: 'afterkeydown'"
+                   class="integerInput" />
+
+            Ext.Price
+
+            <input data-bind="value:extendedPrice, valueUpdate: 'afterkeydown'"    />
+        </div>
+
+    </body>
+</html>
+      
+<script type="text/javascript">
+    var my = my || { };
+    my.headerModel = function () {
+        var self = this;
+        self.link = ko.observable("www.google.guitarListCompact.uk");
+        self.text = ko.observable("Guitar");
+    };
+    
+    my.viewModel = function () {
+        var self = this;
+        self.Name = ko.observable('asd');
+        self.salePrice = ko.observable(21);
+        self.quantity = ko.observable(22);
+        self.extendedPrice = ko.computed({
+            read: function () {
+                return self.salePrice() * self.quantity();
+            },
+            write: function (value) {
+                self.salePrice(value / self.quantity());
+            }
+
+        });
+    };
+
+    ko.applyBindings(new my.viewModel(), document.getElementById("simple-observable"));
+    ko.applyBindings(new my.headerModel(), document.getElementById("simple-observable-header"));
+
+//    my.viewModel1 = new my.viewModel();
+//    ko.applyBindings(my.viewModel1, document.getElementById("simple-observable"));
+//    my.viewModel2 = new my.headerModel();
+//    ko.applyBindings(my.viewModel2, document.getElementById("simple-observable-header"));
+
+</script>
