@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+     <link href="css/fonts.css" rel="stylesheet" type="text/css" />
+        <link href="css/styles.css" rel="stylesheet" type="text/css" />
+        <script src="Scripts/knockout-2.2.1.debug.js" type="text/javascript"></script>
+        <script src="Scripts/jquery-1.9.0.min.js" type="text/javascript"></script>
+     <script src="Customer Scripts/data.js" type="text/javascript"></script>
+</head>
+<body>
+    <div>
+        <span data-bind="text:products().length"></span><span>Products</span>
+    </div>
+    <div>
+        <select class="productsSelect" multiple="multiple"
+                data-bind="options:products, selectedOptions:selectedProducts, optionsText:'description'">
+        </select>
+    </div>
+    <div>
+        <button data-bind="click: removeSelected, enable: productsAreSelected">Remove</button>
+        <button data-bind="click: sortProducts, enable:productsExist">Sort</button>
+    </div>
+    <form data-bind="submit: addItem">
+        Add item:
+        <input type="text" data-bind="value:itemToAdd, valueUpdate:'afterkeydown'"/>
+        <button type="submit" data-bind="enable: itemToAdd().length>0">Add</button>
+    </form>
+</body>
+</html>
+
+<script type="text/javascript">
+
+    var my = my || {};
+
+    my.productViewModel = function (id, salePrice, photo, itemNumber, description) {
+        var self = this;
+        var photoPath = "images/";
+        self.id =id;
+        self.salePrice = salePrice;
+        self.photo = photo;
+        self.itemNumber = itemNumber;
+        self.description = description;
+        self.photoUrl = function () {
+            return photoPath + self.photo();
+        };
+        
+        
+    };
+
+    var sortFn = function(a, b) {
+        return a.description().toLowerCase() > b.description().toLowerCase() ? 1 : -1;
+    };
+
+    my.viewModel = function () {
+        var self = this;
+
+        self.products = ko.observableArray([]);
+        self.selectedProducts = ko.observableArray([]);
+        self.itemToAdd = ko.observable("");
+
+        self.load = ko.computed(function () {
+            $.each(my.sampleData.data.Products, function (i, p) {
+                self.products.push(new my.productViewModel(p.Id, p.SalePrice, p.Photo, p.ItemNumber, p.Description));
+            });
+        });
+
+        ////Remove
+        self.productsAreSelected = ko.computed(function () {
+            return self.products().length > 0;
+        });
+        self.removeSelected = function () {
+            self.products.removeAll(self.selectedProducts());
+            self.selectedProducts([]);
+        };
+
+        /////Sorting
+        self.productsExist = ko.computed(function () {
+            return self.products().length > 0;
+        });
+        //        self.sortProducts = function () {
+        //            self.products.sort(function (left, right) {
+        //                return left.description().toLowerCase() === right.description().toLowerCase()
+        //                    ? 0 : (left.description().toLowerCase() < right.description().toLowerCase() ? -1 : 1);
+        //            });
+        //        };
+
+        self.sortProducts = function () {
+            return self.products.sort(sortFn);
+        };
+
+        //Add
+        self.addItem = function () {
+            if (self.itemToAdd() !== "") {
+                self.products.push(new my.productViewModel("","","","",self.itemToAdd()));
+            }
+        };
+        //Loading products
+        self.load();
+    };
+
+    ko.applyBindings(new my.viewModel());
+</script>
