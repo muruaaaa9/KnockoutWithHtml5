@@ -48,9 +48,7 @@
         
     };
 
-    var sortFn = function(a, b) {
-        return a.description().toLowerCase() > b.description().toLowerCase() ? 1 : -1;
-    };
+
 
     my.viewModel = function () {
         var self = this;
@@ -74,7 +72,7 @@
             self.products.removeAll(self.selectedProducts());
             self.selectedProducts([]);
         };
-        
+
 
         ////////////////////////////////////////////////////////
         /////Sorting
@@ -82,27 +80,24 @@
         self.productsExist = ko.computed(function () {
             return self.products().length > 0;
         });
-        
-        //        self.sortProducts = function () {
-        //            self.products.sort(function (left, right) {
-        //                return left.description().toLowerCase() === right.description().toLowerCase()
-        //                    ? 0 : (left.description().toLowerCase() < right.description().toLowerCase() ? -1 : 1);
-        //            });
-        //        };
 
         self.sortProducts = function () {
-            return self.products.sort(sortFn);
+            self.products.sort(function(productA, productB) {
+                return productA.description == productB.description ? 0 : (productA.description < productB.description ? -1 : 1);
+            });
         };
-        
+
+
+
         ////////////////////////////////////////////////////////
         //Add
         ////////////////////////////////////////////////////////
         self.addItem = function () {
             if (self.itemToAdd() !== "") {
-                self.products.push(new my.productViewModel("","","","",self.itemToAdd()));
+                self.products.push(new my.productViewModel("", "", "", "", self.itemToAdd()));
             }
         };
-        
+
         ////////////////////////////////////////////////////////
         //Loading products
         ////////////////////////////////////////////////////////
